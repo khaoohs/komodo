@@ -9,6 +9,9 @@ enabled = true
 name = "jellyseer"
 [stack.config]
 server = "dockarr(local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 linked_repo = "gh-komodo"
 run_directory = "stacks/dockarr/jellyseer"
 environment = """
@@ -23,6 +26,9 @@ name = "repo-stack"
 template = true
 [stack.config]
 server = "dockarr(local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 linked_repo = "gh-komodo"
 run_directory = "templates/repo-stack"
 environment = """
@@ -41,6 +47,21 @@ repo = "khaoohs/komodo"
 
 ##
 
+[[procedure]]
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule = "Every day at 03:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
 [[builder]]
 name = "Local"
 [builder.config]
@@ -56,18 +77,3 @@ description = "Sync Komodo config to github."
 linked_repo = "gh-komodo"
 resource_path = ["resources/main.toml"]
 managed = true
-
-##
-
-[[procedure]]
-name = "Global Auto Update"
-description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
-tags = ["system"]
-config.schedule = "Every day at 03:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
-]
