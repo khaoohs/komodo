@@ -1,1 +1,57 @@
-## Add resources to get started
+[[server]]
+name = "dockarr(local)"
+[server.config]
+enabled = true
+
+##
+
+[[stack]]
+name = "jellyseer"
+[stack.config]
+server = "dockarr(local)"
+linked_repo = "gh-komodo"
+run_directory = "stacks/dockarr/jellyseer"
+environment = """
+  # VARIABLE = value
+TZ=America/New_York
+"""
+
+##
+
+[[stack]]
+name = "repo-stack"
+template = true
+[stack.config]
+server = "dockarr(local)"
+linked_repo = "gh-komodo"
+run_directory = "templates/repo-stack"
+environment = """
+  # VARIABLE = value
+TZ=America/New_York
+"""
+
+##
+
+[[repo]]
+name = "gh-komodo"
+[repo.config]
+server = "dockarr(local)"
+git_account = "khaoohs"
+repo = "khaoohs/komodo"
+
+##
+
+[[builder]]
+name = "Local"
+[builder.config]
+type = "Server"
+params.server_id = "dockarr(local)"
+
+##
+
+[[resource_sync]]
+name = "komodo-main"
+[resource_sync.config]
+linked_repo = "gh-komodo"
+resource_path = ["resources/main.toml"]
+managed = true
