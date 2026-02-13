@@ -51,6 +51,7 @@ params.server_id = "dockarr(local)"
 
 [[resource_sync]]
 name = "komodo-main"
+description = "Sync Komodo config to github."
 [resource_sync.config]
 linked_repo = "gh-komodo"
 resource_path = ["resources/main.toml"]
