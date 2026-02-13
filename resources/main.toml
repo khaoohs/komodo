@@ -56,18 +56,3 @@ description = "Sync Komodo config to github."
 linked_repo = "gh-komodo"
 resource_path = ["resources/main.toml"]
 managed = true
-
-##
-
-[[procedure]]
-name = "Global Auto Update"
-description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
-tags = ["system"]
-config.schedule = "Every day at 03:00"
-
-[[procedure.config.stage]]
-name = "Stage 1"
-enabled = true
-executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
-]
