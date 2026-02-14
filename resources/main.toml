@@ -6,6 +6,22 @@ enabled = true
 ##
 
 [[stack]]
+name = "audiobookshelf"
+[stack.config]
+server = "dockarr(local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "gh-komodo"
+run_directory = "stacks/dockarr/audiobookshelf"
+environment = """
+  # VARIABLE = value
+TZ=America/New_York
+"""
+
+##
+
+[[stack]]
 name = "copyparty"
 [stack.config]
 server = "dockarr(local)"
@@ -22,14 +38,31 @@ TZ=America/New_York
 ##
 
 [[stack]]
-name = "jellyseer"
+name = "jellystack"
 [stack.config]
 server = "dockarr(local)"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 linked_repo = "gh-komodo"
-run_directory = "stacks/dockarr/jellyseer"
+run_directory = "stacks/dockarr/jellystack"
+environment = """
+  # VARIABLE = value
+TZ=America/New_York
+JFVER=10.11.6
+"""
+
+##
+
+[[stack]]
+name = "mealie"
+[stack.config]
+server = "dockarr(local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "gh-komodo"
+run_directory = "stacks/dockarr/mealie"
 environment = """
   # VARIABLE = value
 TZ=America/New_York
@@ -41,16 +74,24 @@ TZ=America/New_York
 name = "repo-stack"
 template = true
 [stack.config]
-server = "dockarr(local)"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 linked_repo = "gh-komodo"
-run_directory = "templates/repo-stack"
+run_directory = "stacks/dockarr"
 environment = """
   # VARIABLE = value
 TZ=America/New_York
 """
+
+##
+
+[[stack]]
+name = "tubearchivist"
+[stack.config]
+server = "dockarr(local)"
+linked_repo = "gh-komodo"
+run_directory = "stacks/dockarr/tubearchivist"
 
 ##
 
