@@ -30,7 +30,6 @@ services:
     #extra_hosts:
     #  - 'host.docker.internal:host-gateway' 
  
-  
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
