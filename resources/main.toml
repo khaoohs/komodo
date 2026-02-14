@@ -90,6 +90,9 @@ TZ=America/New_York
 name = "tubearchivist"
 [stack.config]
 server = "dockarr(local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 linked_repo = "gh-komodo"
 run_directory = "stacks/dockarr/tubearchivist"
 
