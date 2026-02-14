@@ -105,6 +105,19 @@ repo = "khaoohs/komodo"
 ##
 
 [[procedure]]
+name = "Commit komodo-main"
+config.schedule = "Run every day at 01:00 am"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "CommitSync", execution.params.sync = "komodo-main", enabled = true }
+]
+
+##
+
+[[procedure]]
 name = "Global Auto Update"
 description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
 tags = ["system"]
