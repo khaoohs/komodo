@@ -1,16 +1,58 @@
-## Add your compose file here
 services:
-  hello_world:
-    image: hello-world
-    # networks:
-    #   - default
-    # ports:
-    #   - 3000:3000
-    # volumes:
-    #   - data:/data
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest #
+    container_name: mealie
+    restart: always
+    ports:
+        - "9925:9000" # outside:inside
+    deploy:
+      resources:
+        limits:
+          memory: 1024M # 
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      # TZ: EDT
+      BASE_URL: https://mealie.home.khaoohs.net
+      # Email Settings
+      SMTP_HOST: smtp.protonmail.ch
+      SMTP_PORT: 587
+      SMTP_FROM_NAME: Mealie
+      SMTP_AUTH_STRATEGY: TLS
+      SMTP_FROM_EMAIL: support@khaoohs.net
+      SMTP_USER: support@khaoohs.net
+      SMTP_PASSWORD: HJRJBTD71BAUS6VW
+      # Database Settings
+      DB_ENGINE: postgres
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: mealie
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+    depends_on:
+      postgres:
+        condition: service_healthy
 
-# networks:
-#   default: {}
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    volumes:
+      - mealie-pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mealie
+      POSTGRES_USER: mealie
+      PGUSER: mealie
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
 
-# volumes:
-#   data:
+volumes:
+  mealie-data:
+  mealie-pgdata:
