@@ -31,4 +31,4 @@ services:
     # You can use the following user directive to run the ABS
     # docker container as a specific user. You will need to change
     # the UID and GID to the correct values for your user.
-    user: 1000:1000
+    #user: 1000:1000
