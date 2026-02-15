@@ -1,16 +1,17 @@
 services:
   audiobookshelf:
+    container_name: audiobookshelf
+    hostname: abs.khaoohs.internal
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    ports:
+      - 13378:80
     environment:
       CONFIG_PATH: /config
       HOME: /config/.home
       LOG_LEVEL: info
       METADATA_PATH: /metadata
       TZ: ${TZ}
-    image: ghcr.io/advplyr/audiobookshelf:latest
-    # ABS runs on port 13378 by default. If you want to change
-    # the port, only change the external port, not the internal port
-    ports:
-      - 13378:80
     volumes:
       # These volumes are needed to keep your library persistent
       # and allow media to be accessed by the ABS server.
@@ -27,8 +28,7 @@ services:
       - /opt/docker/audiobookshelf/config:/config
       - /opt/docker/audiobookshelf/config/.metadata:/metadata
       - /mnt/zpool0:/storage
-    restart: unless-stopped
     # You can use the following user directive to run the ABS
     # docker container as a specific user. You will need to change
     # the UID and GID to the correct values for your user.
-    # user: 1000:1000
+    user: 1000:1000
