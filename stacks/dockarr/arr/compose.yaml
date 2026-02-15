@@ -1,16 +1,67 @@
-## Add your compose file here
 services:
-  hello_world:
-    image: hello-world
-    # networks:
-    #   - default
-    # ports:
-    #   - 3000:3000
-    # volumes:
-    #   - data:/data
 
-# networks:
-#   default: {}
+  prowlarr:
+    container_name: prowlarr
+    hostname: prowlarr.khaoohs.internal
+    image: ghcr.io/hotio/prowlarr:latest
+    restart: unless-stopped
+    ports:
+      - 9696:9696
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: ${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/docker/arr/prowlarr:/config
+      - /mnt/zpool0/:/mnt/storage
 
-# volumes:
-#   data:
+  radarr:
+    container_name: radarr
+    hostname: radarr.khaoohs.internal
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/docker/arr/radarr:/config
+      - /mnt/zpool0:/storage
+      
+  sonarr:
+    container_name: sonarr
+    hostname: sonarr.khaoohs.internal
+    image: ghcr.io/hotio/sonarr:latest
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/docker/arr/sonarr:/config
+      - /mnt/zpool0:/storage
+
+  sabnzbd:
+    container_name: sabnzbd
+    hostname: sabnzbd.khaoohs.internal
+    image: ghcr.io/hotio/sabnzbd:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+      #https port; not used with caddy
+      #- 9090:9090
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/docker/arr/sabnzbd:/config
+      - /mnt/zpool0:/storage
